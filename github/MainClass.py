@@ -235,6 +235,19 @@ class Github(object):
             )
             return github.NamedUser.NamedUser(self.__requester, headers, data, completed=True)
 
+    def get_user_by_id(self, uid):
+        """
+        :calls: `GET /user/:id **Undocumented**
+        :param uid: string
+        :rtype: :class:`github.NamedUser.NamedUser`
+        """
+        #assert uid is isinstance(uid, (str, unicode, int)), uid
+        headers, data = self.__requester.requestJsonAndCheck(
+            "GET",
+            "/user/" + uid
+        )
+        return github.NamedUser.NamedUser(self.__requester, headers, data, completed=True)
+
     def get_users(self, since=github.GithubObject.NotSet):
         """
         :calls: `GET /users <http://developer.github.com/v3/users>`_
@@ -799,4 +812,3 @@ class GithubIntegration(object):
         )
         response_dict = response.json()
         return Installation.Installation(None, headers, response_dict, True)
-
